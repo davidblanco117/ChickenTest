@@ -1,11 +1,13 @@
 package primaryPackage;
 
-public class Chicken{
+public class Chicken implements Comerciable{
 
 	
-	private final int maximunDaysOfLife=15;
+	private final int MAXIMUNDAYSOFLIFE=15;
 	private final int CANTDAYSTOPUTANEGG=3;
-	private final int cantEggs=2;
+	private final int CANTEGGS=2;
+	
+	private final int MAXSUPPORTED=100;
 	
 	
 	private double price;
@@ -23,19 +25,38 @@ public class Chicken{
 	public void goNextDay(Farm farm) {
 	
 		daysOfLife++;
-		if(maximunDaysOfLife==daysOfLife) {
+		if(MAXIMUNDAYSOFLIFE==daysOfLife) {
 			isAlive=false;
 			return;
 		}
 		daysToPutAnEgg--;
 		if(daysToPutAnEgg==0) {
-			for(int i=0;i<cantEggs;i++)
+			for(int i=0;i<CANTEGGS;i++)
 				farm.addEgg();
 
 			daysToPutAnEgg=CANTDAYSTOPUTANEGG;
 		}
 			
 	}
+
+	@Override
+	public double getPrice() {
+		// TODO Auto-generated method stub
+		return this.price;
+	}
+
+	@Override
+	public int getMax() {
+		// TODO Auto-generated method stub
+		return this.MAXSUPPORTED;
+	}
+
+	public boolean isAlive() {
+		return this.isAlive;
+	}
+	
+
+	
 
 
 	

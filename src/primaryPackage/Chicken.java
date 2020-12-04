@@ -3,11 +3,11 @@ package primaryPackage;
 public class Chicken implements Comerciable{
 
 	
-	private final int MAXIMUNDAYSOFLIFE=15;
+	private final int MAXIMUNDAYSOFLIFE=4;
 	private final int CANTDAYSTOPUTANEGG=3;
 	private final int CANTEGGS=2;
 	
-	private final int MAXSUPPORTED=100;
+	private static final int MAXSUPPORTED=100;
 	
 	
 	private double price;
@@ -20,6 +20,7 @@ public class Chicken implements Comerciable{
 		isAlive=true;
 		daysOfLife=0;
 		daysToPutAnEgg=CANTDAYSTOPUTANEGG;
+		price=100;
 	}
 	
 	public void goNextDay(Farm farm) {

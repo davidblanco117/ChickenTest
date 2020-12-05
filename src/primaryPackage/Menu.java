@@ -1,19 +1,24 @@
 package primaryPackage;
 
+
 import java.util.Scanner;
 
 public class Menu {
 
 	private Farm farm;
-
+	
 	public void mostrarMenuPrincipal(Farm f) {
 		farm = f;
 		int resp;
 		int resp2;
 		Scanner entradaEscaner;
-		do {
-			System.out.println("Bienvenido a su granja");
 
+		System.out.println("Bienvenido a su granja");
+		do {
+			System.out.println();
+			System.out.println("**************************************************************");
+			System.out.println("*                      DIA : " + String.format("%5d",farm.getDay()) + "                           *");
+			System.out.println("**************************************************************");
 			System.out.println("\nElija una opcion: ");
 			System.out.println("1) Imprimir listado ");
 			System.out.println("2) Vender pollos ");
@@ -23,8 +28,17 @@ public class Menu {
 			System.out.println("6) Avanzar dia ");
 			System.out.println("7) Salir");
 
+			resp=0;
 			entradaEscaner = new Scanner(System.in); // Creación de un objeto Scanner
-			resp = Integer.valueOf(entradaEscaner.nextLine()); // Invocamos un método sobre un objeto Scanner
+			try {
+
+				resp = Integer.valueOf(entradaEscaner.nextLine()); // Invocamos un método sobre un objeto Scanner
+
+			
+			} catch (NumberFormatException ex) {
+				System.out.println("La opcion ingresada debe ser un numero");
+				resp = -1;
+			}
 
 			switch (resp) {
 			case 1: {
@@ -83,6 +97,7 @@ public class Menu {
 
 			case 7:
 				System.out.println("Hasta la proxima");
+				break;
 
 			default:
 				System.out.println("La opcion no es correcta");
@@ -94,10 +109,18 @@ public class Menu {
 	}
 
 	private void printReport() {
-		System.out.println("Dia numero -> " + farm.getDay());
-		System.out.println("Dinero disponible -> " + farm.getMoney());
-		System.out.println("Cantidad de pollos -> " + farm.getChickens().size());
-		System.out.println("Cantidad de huevos -> " + farm.getEggs().size());
+		System.out.println(" _______________________________________________________________");
+		System.out.println("|");
+	//	System.out.println("*  Dia numero -> " + farm.getDay());
+		System.out.println("|  *  Dinero disponible -> " + farm.getMoney());
+		System.out.println("|  *  Cantidad de pollos -> " + farm.getChickens().size());
+		System.out.println("|  *  Cantidad de huevos -> " + farm.getEggs().size());
+		System.out.println("|  *  Precio de los pollos -> " + new Chicken().getPrice());
+		System.out.println("|  *  Precio de los huevos -> " + new Egg().getPrice());
+		System.out.println("|  *  Cantidad de dias de vida de un pollo -> " + new Chicken().getMaximunDaysOfLife());
+		System.out.println("|  *  Cantidad de dias que tarda en eclosionar un huevo -> " + new Egg().getDaysToBorn());
+		System.out.println("|_______________________________________________________________");
+
 	}
 
 }

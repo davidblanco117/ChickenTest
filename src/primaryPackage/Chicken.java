@@ -7,7 +7,7 @@ public class Chicken implements Comerciable{
 	private final int CANTDAYSTOPUTANEGG=3;
 	private final int CANTEGGS=2;
 	
-	private static final int MAXSUPPORTED=100;
+	private final int maxSupported=100;
 	
 	
 	private double price;
@@ -49,13 +49,16 @@ public class Chicken implements Comerciable{
 	@Override
 	public int getMax() {
 		// TODO Auto-generated method stub
-		return this.MAXSUPPORTED;
+		return this.maxSupported;
 	}
 
 	public boolean isAlive() {
 		return this.isAlive;
 	}
 	
+	public int getMaximunDaysOfLife() {
+		return this.MAXIMUNDAYSOFLIFE;
+	}
 
 	
 

@@ -1,6 +1,6 @@
 package primaryPackage;
 
-public class Interfaz {
+public class Main {
 
 	public static void main(String[] args) {
 

@@ -2,11 +2,11 @@ package primaryPackage;
 
 public class Egg implements Comerciable{
 	
-	private static final int DAYSTOBORN=7;
+	private final int DAYSTOBORN=7;
 	
 	
 	private double price;
-	private int MAXSUPPORTED=100;
+	private int maxSupported=100;
 	private int daysOfLife;
 	private boolean isGoingToBorn;
 	
@@ -37,7 +37,10 @@ public class Egg implements Comerciable{
 	@Override
 	public int getMax() {
 		// TODO Auto-generated method stub
-		return this.MAXSUPPORTED;
+		return this.maxSupported;
 	}
 
+	public int getDaysToBorn() {
+		return this.DAYSTOBORN;
+	}
 }

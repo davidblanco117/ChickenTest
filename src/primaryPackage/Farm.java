@@ -7,6 +7,7 @@ public class Farm {
 
 	private int day = 1;
 
+	private int id;
 	private double money = 0;
 	private ArrayList<Chicken> chickens;
 	private ArrayList<Egg> eggs;
@@ -15,9 +16,15 @@ public class Farm {
 	public Farm() {
 		chickens = new ArrayList<Chicken>();
 		eggs = new ArrayList<Egg>();
+		}
 
+	public Farm(int id) {
+		chickens = new ArrayList<Chicken>();
+		eggs = new ArrayList<Egg>();
+		this.id=id;
 	}
 
+	
 	public Farm(double money) {
 		this.money = money;
 		chickens = new ArrayList<Chicken>();
@@ -54,6 +61,8 @@ public class Farm {
 
 	@SuppressWarnings("rawtypes")
 	public int buy(Comerciable product, int cant, List list) {
+		if(cant<0)
+			return -3;
 		if (list.size() + cant > product.getMax())
 			return -2;
 		else if (this.money >= product.getPrice() * cant) {
@@ -84,6 +93,8 @@ public class Farm {
 
 	@SuppressWarnings("rawtypes")
 	public int sell(Comerciable product, int cant, List list) {
+		if(cant<0)
+			return -3;
 		if (list.size() - cant < 0)
 			return -2;
 		this.money += product.getPrice() * cant;
@@ -95,7 +106,7 @@ public class Farm {
 		int resp = sell(new Chicken(), cant, chickens);
 		if (resp == 0) {
 			for (int i = 0; i < cant; i++) {
-				chickens.remove(1);
+				chickens.remove(0);
 			}
 		}
 		return resp;
@@ -105,7 +116,7 @@ public class Farm {
 		int resp = sell(new Egg(), cant, eggs);
 		if (resp == 0) {
 			for (int i = 0; i < cant; i++) {
-				eggs.remove(1);
+				eggs.remove(0);
 			}
 		}
 		return resp;

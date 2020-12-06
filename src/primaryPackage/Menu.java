@@ -31,20 +31,19 @@ public class Menu {
 				resp = Integer.valueOf(sc.nextLine()); // Invocamos un método sobre un objeto Scanner
 
 			} catch (NumberFormatException ex) {
-				System.out.println("La opcion ingresada debe ser un numero");
 				resp = -1;
 			}
 
 			switch (resp) {
 
-			case 1: 
+			case 1:
 				printReport();
 				break;
 
 			case 2:
 				menuComprar(resp);
 				break;
-				
+
 			case 3:
 				menuVender(resp);
 				break;
@@ -58,6 +57,10 @@ public class Menu {
 				sc.close();
 				break;
 
+			case -1:
+				System.out.println("La opcion ingresada debe ser un numero");
+				break;
+				
 			default:
 				System.out.println("La opcion no es correcta");
 			}
@@ -96,11 +99,18 @@ public class Menu {
 
 		} catch (NumberFormatException e) {
 			System.out.println("La opcion ingresada no es correcta, se regresa al menú principal");
+			return;
 		}
 		switch (resp) {
 		case 1:
 			System.out.println("Elija la cantidad de pollos que desea comprar: ");
-			resp = Integer.valueOf(sc.nextLine()); // Invocamos un método sobre un objeto Scanner
+			try {
+				resp = Integer.valueOf(sc.nextLine()); // Invocamos un método sobre un objeto Scanner
+				
+			}catch(NumberFormatException e) {
+				System.out.println("Debes ingresar un numero");
+				return;
+			}
 			if (farm.buyChickens(resp) == 0) {
 				System.out.println("La compra ha sido exitosa");
 			} else {
@@ -110,7 +120,13 @@ public class Menu {
 			break;
 		case 2:
 			System.out.println("Elija la cantidad de huevos que desea comprar: ");
-			resp = Integer.valueOf(sc.nextLine()); // Invocamos un método sobre un objeto Scanner
+			try {
+				resp = Integer.valueOf(sc.nextLine()); // Invocamos un método sobre un objeto Scanner
+				
+			}catch(NumberFormatException e) {
+				System.out.println("Debes ingresar un numero");
+				return;
+			}
 			if (farm.buyEggs(resp) == 0) {
 				System.out.println("La compra ha sido exitosa");
 			} else {
@@ -147,7 +163,17 @@ public class Menu {
 		switch (resp) {
 		case 1:
 			System.out.println("Elija la cantidad de pollos que desea vender: ");
-			resp = Integer.valueOf(sc.nextLine()); // Invocamos un método sobre un objeto Scanner
+
+			try {
+
+				resp = Integer.valueOf(sc.nextLine()); // Invocamos un método sobre un objeto Scanner
+
+			} catch (NumberFormatException e) {
+
+				System.out.println("Debes ingresar un numero");
+
+			}
+
 			if (farm.sellChickens(resp) == 0) {
 				System.out.println("La venta ha sido exitosa");
 			} else {
@@ -157,7 +183,13 @@ public class Menu {
 			break;
 		case 2:
 			System.out.println("Elija la cantidad de huevos que desea vender: ");
-			resp = Integer.valueOf(sc.nextLine()); // Invocamos un método sobre un objeto Scanner
+			try {
+				resp = Integer.valueOf(sc.nextLine()); // Invocamos un método sobre un objeto Scanner
+
+			} catch (NumberFormatException e) {
+				System.out.println("Debes ingresar un numero");
+			}
+
 			if (farm.sellEggs(resp) == 0) {
 				System.out.println("La venta ha sido exitosa");
 			} else {

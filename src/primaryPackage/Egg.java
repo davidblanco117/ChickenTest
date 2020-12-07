@@ -9,11 +9,13 @@ public class Egg implements Comerciable{
 	private int maxSupported=100;
 	private int daysOfLife;
 	private boolean isGoingToBorn;
+	private int idGranja;	
 	
 	public Egg() {
 		daysOfLife=0;
 		isGoingToBorn=false;
 		price = 30;
+		idGranja=1;
 	}
 	
 	public void goNextDay(Farm farm) {
@@ -42,5 +44,9 @@ public class Egg implements Comerciable{
 
 	public int getDaysToBorn() {
 		return this.DAYSTOBORN;
+	}
+	
+	public int getIdGranja() {
+		return idGranja;
 	}
 }

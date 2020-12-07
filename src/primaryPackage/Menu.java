@@ -87,7 +87,7 @@ public class Menu {
 		// System.out.println("* Dia numero -> " + farm.getDay());
 		System.out.println("|  *  Dinero disponible -> " + farm.getMoney());
 		System.out.println("|  *  Cantidad de pollos -> " + farm.readChickens().size());
-		System.out.println("|  *  Cantidad de huevos -> " + farm.getEggs().size());
+		System.out.println("|  *  Cantidad de huevos -> " + farm.readEggs().size());
 		System.out.println("|  *  Precio de los pollos -> " + new Chicken().getPrice());
 		System.out.println("|  *  Precio de los huevos -> " + new Egg().getPrice());
 		System.out.println("|  *  Cantidad de dias de vida de un pollo -> " + new Chicken().getMaximunDaysOfLife());

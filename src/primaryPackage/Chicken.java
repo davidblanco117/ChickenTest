@@ -1,6 +1,5 @@
 package primaryPackage;
 
-import com.fblanco.chickentest.dao.ChickenDao;
 
 public class Chicken implements Comerciable{
 
@@ -10,7 +9,6 @@ public class Chicken implements Comerciable{
 	private final int CANTEGGS=3;
 	private int idGranja;
 	private final int maxSupported=100;
-	private int id;
 	
 	
 	private double price;

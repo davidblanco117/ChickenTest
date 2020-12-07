@@ -4,12 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fblanco.chickentest.dao.ChickenDao;
+import com.fblanco.chickentest.dao.EggDao;
 
-public class Farm implements ChickenDao{
+public class Farm implements ChickenDao, EggDao{
 
 	private int day = 1;
-
-	private int id;
 	private double money = 0;
 	private ArrayList<Chicken> chickens;
 	private ArrayList<Egg> eggs;
@@ -80,10 +79,11 @@ public class Farm implements ChickenDao{
 	}
 
 	public int buyEggs(int cant) {
-		int resp = buy(new Egg(), cant, this.eggs);
+		int resp = buy(new Egg(), cant, readEggs());
 		if (resp == 0) {
 			for (int i = 0; i < cant; i++)
-				eggs.add(new Egg());
+				insertEgg(new Egg());
+				//eggs.add(new Egg());
 		}
 		return resp;
 	}

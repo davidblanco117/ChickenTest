@@ -23,9 +23,7 @@ public class Menu {
 			System.out.println("2) Comprar ");
 			System.out.println("3) Vender ");
 			System.out.println("4) Avanzar dia ");
-			System.out.println("5) Cargar pollos desde DB ");
-			System.out.println("6) Guardar pollos desde DB ");
-			System.out.println("7) Salir");
+			System.out.println("5) Salir");
 
 			resp = 0;
 			try {
@@ -53,16 +51,8 @@ public class Menu {
 			case 4:
 				farm.goNextDay();
 				break;
-				
-			case 5: 
-				farm.getChickensByDB();
-				break;
-			case 6:
-				System.out.println("Guardando pollos en DB");
-				farm.saveChickensInDB(farm.getChickens());
-				break;
 	
-			case 7:
+			case 5:
 				System.out.println("Hasta la proxima");
 				sc.close();
 				break;
@@ -76,7 +66,7 @@ public class Menu {
 				System.out.println("La opcion no es correcta");
 			}
 
-		} while (resp != 7);
+		} while (resp != 5);
 		sc.close();
 
 	}
@@ -86,8 +76,8 @@ public class Menu {
 		System.out.println("|");
 		// System.out.println("* Dia numero -> " + farm.getDay());
 		System.out.println("|  *  Dinero disponible -> " + farm.getMoney());
-		System.out.println("|  *  Cantidad de pollos -> " + farm.readChickens().size());
-		System.out.println("|  *  Cantidad de huevos -> " + farm.readEggs().size());
+		System.out.println("|  *  Cantidad de pollos -> " + farm.readChickens(farm.getId()).size());
+		System.out.println("|  *  Cantidad de huevos -> " + farm.readEggs(farm.getId()).size());
 		System.out.println("|  *  Precio de los pollos -> " + new Chicken().getPrice());
 		System.out.println("|  *  Precio de los huevos -> " + new Egg().getPrice());
 		System.out.println("|  *  Cantidad de dias de vida de un pollo -> " + new Chicken().getMaximunDaysOfLife());

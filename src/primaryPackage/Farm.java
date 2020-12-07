@@ -6,24 +6,32 @@ import java.util.List;
 import com.fblanco.chickentest.dao.ChickenDao;
 import com.fblanco.chickentest.dao.EggDao;
 
-public class Farm implements ChickenDao, EggDao{
+public class Farm implements ChickenDao, EggDao {
 
 	private int day = 1;
 	private double money = 0;
 	private ArrayList<Chicken> chickens;
 	private ArrayList<Egg> eggs;
 	private ArrayList<Object> toRemove;
+	private int id;
 
 	public Farm() {
-		chickens = new ArrayList<Chicken>();
-		eggs = new ArrayList<Egg>();
-		}
+		chickens = readChickens(id);
+		eggs = readEggs(this.id);
+		id = 1;
+	}
 
-	
+	public Farm(int id, double money) {
+		chickens = readChickens(id);
+		eggs = readEggs(this.id);
+		this.id = id;
+		this.money = money;
+	}
+
 	public Farm(double money) {
 		this.money = money;
-		chickens = new ArrayList<Chicken>();
-		eggs = new ArrayList<Egg>();
+		chickens = readChickens(id);
+		eggs = readEggs(this.id);
 
 	}
 
@@ -40,12 +48,12 @@ public class Farm implements ChickenDao, EggDao{
 			// chickens.remove(chicken);
 		}
 		chickens.removeAll(toRemove);
-		
+
 		toRemove = new ArrayList<Object>();
 		for (Egg egg : eggs) {
 			egg.goNextDay(this);
 			if (egg.isGoingToBorn()) {
-				//eggs.remove(egg);
+				// eggs.remove(egg);
 				toRemove.add(egg);
 				chickens.add(new Chicken());
 			}
@@ -56,7 +64,7 @@ public class Farm implements ChickenDao, EggDao{
 
 	@SuppressWarnings("rawtypes")
 	public int buy(Comerciable product, int cant, List list) {
-		if(cant<0)
+		if (cant < 0)
 			return -3;
 		if (list.size() + cant > product.getMax())
 			return -2;
@@ -69,28 +77,28 @@ public class Farm implements ChickenDao, EggDao{
 	}
 
 	public int buyChickens(int cant) {
-		int resp = buy(new Chicken(), cant, readChickens());
+		int resp = buy(new Chicken(), cant, readChickens(id));
 		if (resp == 0) {
 			for (int i = 0; i < cant; i++)
 				insertChicken(new Chicken());
-				//chickens.add(new Chicken());
+			// chickens.add(new Chicken());
 		}
 		return resp;
 	}
 
 	public int buyEggs(int cant) {
-		int resp = buy(new Egg(), cant, readEggs());
+		int resp = buy(new Egg(), cant, readEggs(this.id));
 		if (resp == 0) {
 			for (int i = 0; i < cant; i++)
 				insertEgg(new Egg());
-				//eggs.add(new Egg());
+			// eggs.add(new Egg());
 		}
 		return resp;
 	}
 
 	@SuppressWarnings("rawtypes")
 	public int sell(Comerciable product, int cant, List list) {
-		if(cant<0)
+		if (cant < 0)
 			return -3;
 		if (list.size() - cant < 0)
 			return -2;
@@ -100,23 +108,30 @@ public class Farm implements ChickenDao, EggDao{
 	}
 
 	public int sellChickens(int cant) {
+		chickens = readChickens(this.id);
 		int resp = sell(new Chicken(), cant, chickens);
 		if (resp == 0) {
-			for (int i = 0; i < cant; i++) {
-				chickens.remove(0);
-			}
+			// for (int i = 0; i < cant; i++) {
+			deleteChicken(cant, this.id);
+			// chickens.remove(0);
+			// }
+			chickens = readChickens(this.id);
 		}
 		return resp;
 	}
 
 	public int sellEggs(int cant) {
+		eggs = readEggs(this.id);
 		int resp = sell(new Egg(), cant, eggs);
 		if (resp == 0) {
-			for (int i = 0; i < cant; i++) {
-				eggs.remove(0);
-			}
+			// for (int i = 0; i < cant; i++) {
+			deleteEggs(cant, this.id);
+			eggs = readEggs(this.id);
 		}
+		
+		// eggs.remove(0);
 		return resp;
+
 	}
 
 	public double getMoney() {
@@ -135,8 +150,11 @@ public class Farm implements ChickenDao, EggDao{
 		return eggs;
 	}
 
-	
 	public void getChickensByDB() {
-		chickens = readChickens();
+		chickens = readChickens(this.getId());
+	}
+
+	public int getId() {
+		return this.id;
 	}
 }

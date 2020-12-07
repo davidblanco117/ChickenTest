@@ -13,13 +13,13 @@ import com.fblanco.chickentest.db.IDBConnection;
 
 import primaryPackage.Egg;
 
-public interface EggDao extends IDBConnection{
+public interface EggDao extends IDBConnection {
 
-	default ArrayList<Egg> readEggs() {
+	default ArrayList<Egg> readEggs(int idGranja) {
 		ArrayList<Egg> eggs = new ArrayList<Egg>();
 
 		try (Connection connection = connectionToDB()) {
-			String query = "SELECT * FROM " + TEGGS;
+			String query = "SELECT * FROM " + TEGGS + " WHERE " + TEGGS_ID_GRANJA + " = " + idGranja;
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
 			ResultSet rs = preparedStatement.executeQuery();
 			while (rs.next()) {
@@ -52,27 +52,20 @@ public interface EggDao extends IDBConnection{
 		return false;
 	}
 
-	default boolean saveEggsInDB(ArrayList<Egg> eggs) {
+	default boolean deleteEggs(int cant, int idGranja) {
 
 		try (Connection connection = connectionToDB()) {
 			Statement statement = connection.createStatement();
 
-			for (Egg egg : eggs) {
-
-				String query = "INSERT INTO " + TEGGS + "( " + TEGGS_DIAS_DE_VIDA + ", " + TEGGS_PRECIO + ", "
-						+ TEGGS_ID_GRANJA + ")" + " VALUES(1," + egg.getPrice() + ", " + egg.getIdGranja()
-						+ ")";
-				System.out.println(query);
-				statement.executeUpdate(query);
-
-			}
+			String query = "DELETE FROM " + TEGGS + " WHERE " + TEGGS_ID_GRANJA + " = " + idGranja + " LIMIT " + cant;
+			System.out.println(query);
+			statement.executeUpdate(query);
 
 		} catch (Exception e) {
 			e.printStackTrace();
 			// TODO: handle exception
-			return false;
 		}
 
-		return true;
+		return false;
 	}
 }

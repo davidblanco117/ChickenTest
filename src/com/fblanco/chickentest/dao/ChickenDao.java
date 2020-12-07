@@ -14,11 +14,11 @@ import primaryPackage.*;
 
 public interface ChickenDao extends IDBConnection {
 
-	default ArrayList<Chicken> readChickens() {
+	default ArrayList<Chicken> readChickens(int idGranja) {
 		ArrayList<Chicken> chickens = new ArrayList<Chicken>();
 
 		try (Connection connection = connectionToDB()) {
-			String query = "SELECT * FROM " + TCHICKEN;
+			String query = "SELECT * FROM " + TCHICKEN + " WHERE " + TCHICKEN_ID_GRANJA + " = " + idGranja ;
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
 			ResultSet rs = preparedStatement.executeQuery();
 			while (rs.next()) {
@@ -41,6 +41,22 @@ public interface ChickenDao extends IDBConnection {
 
 			String query = "INSERT INTO " + TCHICKEN + "( " + TCHICKEN_DIAS_DE_VIDA + ", " + TCHICKEN_PRECIO + ", "
 					+ TEGGS_ID_GRANJA + ")" + " VALUES(1," + chicken.getPrice() + ", " + chicken.getIdGranja() + ")";
+			statement.executeUpdate(query);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			// TODO: handle exception
+		}
+
+		return false;
+	}
+	
+	default boolean deleteChicken(int cant, int idGranja) {
+
+		try (Connection connection = connectionToDB()) {
+			Statement statement = connection.createStatement();
+
+			String query = "DELETE FROM " + TCHICKEN + " LIMIT " + cant + " WHERE "+ TCHICKEN_ID_GRANJA +" = " + idGranja;
 			System.out.println(query);
 			statement.executeUpdate(query);
 
@@ -51,6 +67,10 @@ public interface ChickenDao extends IDBConnection {
 
 		return false;
 	}
+	
+	
+	
+	
 
 	default boolean saveChickensInDB(ArrayList<Chicken> chickens) {
 

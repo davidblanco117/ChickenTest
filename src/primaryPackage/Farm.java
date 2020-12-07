@@ -3,7 +3,9 @@ package primaryPackage;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Farm {
+import com.fblanco.chickentest.dao.ChickenDao;
+
+public class Farm implements ChickenDao{
 
 	private int day = 1;
 
@@ -17,12 +19,6 @@ public class Farm {
 		chickens = new ArrayList<Chicken>();
 		eggs = new ArrayList<Egg>();
 		}
-
-	public Farm(int id) {
-		chickens = new ArrayList<Chicken>();
-		eggs = new ArrayList<Egg>();
-		this.id=id;
-	}
 
 	
 	public Farm(double money) {
@@ -74,10 +70,11 @@ public class Farm {
 	}
 
 	public int buyChickens(int cant) {
-		int resp = buy(new Chicken(), cant, this.chickens);
+		int resp = buy(new Chicken(), cant, readChickens());
 		if (resp == 0) {
 			for (int i = 0; i < cant; i++)
-				chickens.add(new Chicken());
+				insertChicken(new Chicken());
+				//chickens.add(new Chicken());
 		}
 		return resp;
 	}
@@ -138,4 +135,8 @@ public class Farm {
 		return eggs;
 	}
 
+	
+	public void getChickensByDB() {
+		chickens = readChickens();
+	}
 }

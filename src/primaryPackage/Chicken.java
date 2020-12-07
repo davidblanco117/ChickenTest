@@ -1,5 +1,7 @@
 package primaryPackage;
 
+import com.fblanco.chickentest.dao.ChickenDao;
+
 public class Chicken implements Comerciable{
 
 	
@@ -8,6 +10,7 @@ public class Chicken implements Comerciable{
 	private final int CANTEGGS=3;
 	private int idGranja;
 	private final int maxSupported=100;
+	private int id;
 	
 	
 	private double price;
@@ -21,6 +24,7 @@ public class Chicken implements Comerciable{
 		daysOfLife=0;
 		daysToPutAnEgg=CANTDAYSTOPUTANEGG;
 		price=100;
+		idGranja = 1;
 	}
 	
 	public Chicken(int idGranja) {
@@ -30,6 +34,17 @@ public class Chicken implements Comerciable{
 		price=100;
 		this.idGranja= idGranja;
 	}
+	
+	
+	public Chicken(double precio, int diasDeVida, int idGranja) {
+		isAlive=true;
+		daysOfLife=diasDeVida;
+		daysToPutAnEgg=CANTDAYSTOPUTANEGG;
+		price=precio;
+		this.idGranja= idGranja;
+	}
+	
+	
 	
 	public void goNextDay(Farm farm) {
 	
@@ -72,6 +87,9 @@ public class Chicken implements Comerciable{
 		return this.idGranja;
 	}
 
+	public int getId() {
+		return this.getId();
+	}
 
 	
 }

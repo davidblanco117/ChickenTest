@@ -5,7 +5,6 @@ public class Chicken implements Comerciable{
 
 	
 	private final int MAXIMUNDAYSOFLIFE=100;
-	private final int CANTDAYSTOPUTANEGG=10;
 	private final int CANTEGGS=3;
 	private int idGranja;
 	private final int maxSupported=100;
@@ -20,16 +19,16 @@ public class Chicken implements Comerciable{
 	public Chicken() {
 		isAlive=true;
 		daysOfLife=0;
-		daysToPutAnEgg=CANTDAYSTOPUTANEGG;
-		price=100;
+		daysToPutAnEgg=Parametros.cantDiasPonerHuevos;
+		price=Parametros.precioPollos;
 		idGranja = 1;
 	}
 	
 	public Chicken(int idGranja) {
 		isAlive=true;
 		daysOfLife=0;
-		daysToPutAnEgg=CANTDAYSTOPUTANEGG;
-		price=100;
+		daysToPutAnEgg=Parametros.cantDiasPonerHuevos;
+		price=Parametros.precioHuevos;
 		this.idGranja= idGranja;
 	}
 	
@@ -37,7 +36,7 @@ public class Chicken implements Comerciable{
 	public Chicken(double precio, int diasDeVida, int idGranja) {
 		isAlive=true;
 		daysOfLife=diasDeVida;
-		daysToPutAnEgg=CANTDAYSTOPUTANEGG;
+		daysToPutAnEgg=Parametros.cantDiasPonerHuevos;
 		price=precio;
 		this.idGranja= idGranja;
 	}
@@ -47,16 +46,16 @@ public class Chicken implements Comerciable{
 	public void goNextDay(Farm farm) {
 	
 		daysOfLife++;
-		if(MAXIMUNDAYSOFLIFE==daysOfLife) {
+		if(Parametros.cantDiasVidaPollo==daysOfLife) {
 			isAlive=false;
 			return;
 		}
 		daysToPutAnEgg--;
 		if(daysToPutAnEgg==0) {
-			for(int i=0;i<CANTEGGS;i++)
+			for(int i=0;i<Parametros.cantHuevosDeUnPollo;i++)
 				farm.addEgg();
 
-			daysToPutAnEgg=CANTDAYSTOPUTANEGG;
+			daysToPutAnEgg=Parametros.cantDiasPonerHuevos;
 		}
 			
 	}
@@ -77,9 +76,6 @@ public class Chicken implements Comerciable{
 		return this.isAlive;
 	}
 	
-	public int getMaximunDaysOfLife() {
-		return this.MAXIMUNDAYSOFLIFE;
-	}
 
 	public int getIdGranja() {
 		return this.idGranja;
@@ -88,6 +84,13 @@ public class Chicken implements Comerciable{
 	public int getId() {
 		return this.getId();
 	}
-
+	
+	public int getDaysToPutAnEgg() {
+		return this.daysToPutAnEgg;
+	}
+	
+	public void setDaysToPutAnEgg(int days) {
+		this.daysToPutAnEgg = days;
+	}
 	
 }

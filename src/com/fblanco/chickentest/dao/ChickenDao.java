@@ -24,6 +24,7 @@ public interface ChickenDao extends IDBConnection {
 			while (rs.next()) {
 				Chicken ck = new Chicken(Double.valueOf(rs.getString("precio")),
 						Integer.valueOf(rs.getString("dias_de_vida")), Integer.valueOf(rs.getString("id_granja")));
+				ck.setDaysToPutAnEgg(Integer.valueOf(rs.getString(TEGGS_DIAS_HASTA_PROXIMOS_HUEVOS)));
 				chickens.add(ck);
 			}
 
@@ -39,8 +40,9 @@ public interface ChickenDao extends IDBConnection {
 		try (Connection connection = connectionToDB()) {
 			Statement statement = connection.createStatement();
 
-			String query = "INSERT INTO " + TCHICKEN + "( " + TCHICKEN_DIAS_DE_VIDA + ", " + TCHICKEN_PRECIO + ", "
-					+ TEGGS_ID_GRANJA + ")" + " VALUES(1," + chicken.getPrice() + ", " + chicken.getIdGranja() + ")";
+			String query = "INSERT INTO " + TCHICKEN + "( " + TCHICKEN_DIAS_DE_VIDA + ", " + TCHICKEN_PRECIO + ", " +
+					TEGGS_ID_GRANJA + "," + TEGGS_DIAS_HASTA_PROXIMOS_HUEVOS + ")" + " VALUES(1," + chicken.getPrice() + ", " +
+					chicken.getIdGranja() + ", " +  chicken.getDaysToPutAnEgg() + ")";
 			statement.executeUpdate(query);
 
 		} catch (Exception e) {
@@ -56,36 +58,9 @@ public interface ChickenDao extends IDBConnection {
 		try (Connection connection = connectionToDB()) {
 			Statement statement = connection.createStatement();
 
-			String query = "DELETE FROM " + TCHICKEN + " LIMIT " + cant + " WHERE "+ TCHICKEN_ID_GRANJA +" = " + idGranja;
+			String query = "DELETE FROM " + TCHICKEN +  " WHERE "+ TCHICKEN_ID_GRANJA +" = " + idGranja +" LIMIT " + cant ;
 			System.out.println(query);
 			statement.executeUpdate(query);
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			// TODO: handle exception
-		}
-
-		return false;
-	}
-	
-	
-	
-	
-
-	default boolean saveChickensInDB(ArrayList<Chicken> chickens) {
-
-		try (Connection connection = connectionToDB()) {
-			Statement statement = connection.createStatement();
-
-			for (Chicken chicken : chickens) {
-
-				String query = "INSERT INTO " + TCHICKEN + "( " + TCHICKEN_DIAS_DE_VIDA + ", " + TCHICKEN_PRECIO + ", "
-						+ TEGGS_ID_GRANJA + ")" + " VALUES(1," + chicken.getPrice() + ", " + chicken.getIdGranja()
-						+ ")";
-				System.out.println(query);
-				statement.executeUpdate(query);
-
-			}
 
 		} catch (Exception e) {
 			e.printStackTrace();

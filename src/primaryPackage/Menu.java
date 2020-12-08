@@ -1,17 +1,17 @@
 package primaryPackage;
 
 import java.util.Scanner;
+import com.fblanco.chickentest.dao.*;
 
-public class Menu {
+public class Menu implements FarmDao{
 
 	private Farm farm;
 	Scanner sc;
 
-	public void mostrarMenuPrincipal(Farm f) {
+	private void mostrarMenuPrincipal(Farm f) {
 		farm = f;
 		int resp;
 		System.out.println("Bienvenido a su granja");
-		sc = new Scanner(System.in); // Creación de un objeto Scanner
 		do {
 			System.out.println();
 			System.out.println("**************************************************************");
@@ -51,17 +51,16 @@ public class Menu {
 			case 4:
 				farm.goNextDay();
 				break;
-	
+
 			case 5:
 				System.out.println("Hasta la proxima");
 				sc.close();
 				break;
-				
-			
+
 			case -1:
 				System.out.println("La opcion ingresada debe ser un numero");
 				break;
-				
+
 			default:
 				System.out.println("La opcion no es correcta");
 			}
@@ -78,11 +77,74 @@ public class Menu {
 		System.out.println("|  *  Dinero disponible -> " + farm.getMoney());
 		System.out.println("|  *  Cantidad de pollos -> " + farm.readChickens(farm.getId()).size());
 		System.out.println("|  *  Cantidad de huevos -> " + farm.readEggs(farm.getId()).size());
-		System.out.println("|  *  Precio de los pollos -> " + new Chicken().getPrice());
-		System.out.println("|  *  Precio de los huevos -> " + new Egg().getPrice());
-		System.out.println("|  *  Cantidad de dias de vida de un pollo -> " + new Chicken().getMaximunDaysOfLife());
-		System.out.println("|  *  Cantidad de dias que tarda en eclosionar un huevo -> " + new Egg().getDaysToBorn());
+		System.out.println("|  *  Precio de los pollos -> " + Parametros.precioPollos);
+		System.out.println("|  *  Precio de los huevos -> " + Parametros.precioHuevos);
+		System.out.println("|  *  Cantidad de dias de vida de un pollo -> " + Parametros.cantDiasVidaPollo);
+		System.out.println("|  *  Cantidad de dias que tarda en eclosionar un huevo -> " + Parametros.cantDiasEclosionarHuevos);
 		System.out.println("|_______________________________________________________________");
+
+	}
+
+	public void menuLogin() {
+		sc = new Scanner(System.in); // Creación de un objeto Scanner
+		
+		int resp = 0;
+		boolean loop = true;
+		String user;
+		String pass;
+		Farm farm;
+		System.out.println("Bienvenido");
+		do {
+			System.out.println("Elija la opcion:");
+			System.out.println("1) Iniciar Sesion");
+			System.out.println("2) Registrarte");
+			System.out.println("3) Salir");
+			try {
+				resp = Integer.valueOf(sc.nextLine());
+			} catch (NumberFormatException e) {
+				System.out.println("Debes escribir un numero");
+			}
+
+			switch (resp) {
+			case 1:
+				System.out.println("Escribe tu usuario:");
+				user = sc.nextLine();
+				System.out.println("Escribe tu password:");
+				pass = sc.nextLine();
+				farm = validateUserPass(user,pass);
+				if(farm==null) 
+					System.out.println("El usuario o la contraseña son incorrectos");
+				else {
+					System.out.println("Usuario ingresado exitosamente");
+					loop=false;
+					mostrarMenuPrincipal(farm);
+				}
+				break;
+			case 2:
+				System.out.println("Escribe tu usuario:");
+				user = sc.nextLine();
+				
+				System.out.println("Escribe tu password:");
+				pass = sc.nextLine();
+				boolean userExist = validateUser(user);
+				if(userExist) 
+					System.out.println("El usuario ya existe en la base de datos");
+				else {
+					
+					System.out.println("Usuario registrado exitosamente");
+					loop=false;
+					Farm newFarm = new Farm(1000.0);
+					insertNewUser(newFarm, user, pass);
+					mostrarMenuPrincipal(newFarm);
+					
+				}
+
+				break;
+			default:
+				break;
+			}
+
+		} while (loop);
 
 	}
 
@@ -107,8 +169,8 @@ public class Menu {
 			System.out.println("Elija la cantidad de pollos que desea comprar: ");
 			try {
 				resp = Integer.valueOf(sc.nextLine()); // Invocamos un método sobre un objeto Scanner
-				
-			}catch(NumberFormatException e) {
+
+			} catch (NumberFormatException e) {
 				System.out.println("Debes ingresar un numero");
 				return;
 			}
@@ -123,8 +185,8 @@ public class Menu {
 			System.out.println("Elija la cantidad de huevos que desea comprar: ");
 			try {
 				resp = Integer.valueOf(sc.nextLine()); // Invocamos un método sobre un objeto Scanner
-				
-			}catch(NumberFormatException e) {
+
+			} catch (NumberFormatException e) {
 				System.out.println("Debes ingresar un numero");
 				return;
 			}

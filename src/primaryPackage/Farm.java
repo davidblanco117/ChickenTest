@@ -5,8 +5,9 @@ import java.util.List;
 
 import com.fblanco.chickentest.dao.ChickenDao;
 import com.fblanco.chickentest.dao.EggDao;
+import com.fblanco.chickentest.dao.FarmDao;
 
-public class Farm implements ChickenDao, EggDao {
+public class Farm implements ChickenDao, EggDao,FarmDao {
 
 	private int day = 1;
 	private double money = 0;
@@ -14,11 +15,12 @@ public class Farm implements ChickenDao, EggDao {
 	private ArrayList<Egg> eggs;
 	private ArrayList<Object> toRemove;
 	private int id;
+	private Parametros params;
 
 	public Farm() {
 		chickens = readChickens(id);
 		eggs = readEggs(this.id);
-		id = 1;
+		params= new Parametros();
 	}
 
 	public Farm(int id, double money) {
@@ -26,12 +28,14 @@ public class Farm implements ChickenDao, EggDao {
 		eggs = readEggs(this.id);
 		this.id = id;
 		this.money = money;
+		params = new Parametros();
 	}
 
 	public Farm(double money) {
 		this.money = money;
 		chickens = readChickens(id);
 		eggs = readEggs(this.id);
+		params= new Parametros();
 
 	}
 
@@ -70,6 +74,7 @@ public class Farm implements ChickenDao, EggDao {
 			return -2;
 		else if (this.money >= product.getPrice() * cant) {
 			this.money -= product.getPrice() * cant;
+			updateMoney(this, this.money);
 			return 0;
 		}
 		return -1;
@@ -103,6 +108,8 @@ public class Farm implements ChickenDao, EggDao {
 		if (list.size() - cant < 0)
 			return -2;
 		this.money += product.getPrice() * cant;
+		updateMoney(this, this.money);
+		
 		return 0;
 
 	}

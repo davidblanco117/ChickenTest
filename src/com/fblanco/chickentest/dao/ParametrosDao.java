@@ -6,11 +6,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 import com.fblanco.chickentest.db.IDBConnection;
 
-import primaryPackage.Chicken;
 import primaryPackage.Parametros;
 
 public interface ParametrosDao extends IDBConnection {

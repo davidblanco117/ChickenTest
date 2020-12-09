@@ -15,6 +15,7 @@ public class Farm implements ChickenDao, EggDao,FarmDao {
 	private ArrayList<Egg> eggs;
 	private ArrayList<Object> toRemove;
 	private int id;
+	@SuppressWarnings("unused")
 	private Parametros params;
 
 	public Farm() {
@@ -44,12 +45,14 @@ public class Farm implements ChickenDao, EggDao,FarmDao {
 	}
 
 	public void goNextDay() {
+		Parametros.dia++;
+		updateNewDay(this);
+		
 		toRemove = new ArrayList<Object>();
 		for (Chicken chicken : chickens) {
 			chicken.goNextDay(this);
 			if (!chicken.isAlive())
 				toRemove.add(chicken);
-			// chickens.remove(chicken);
 		}
 		chickens.removeAll(toRemove);
 
@@ -57,13 +60,11 @@ public class Farm implements ChickenDao, EggDao,FarmDao {
 		for (Egg egg : eggs) {
 			egg.goNextDay(this);
 			if (egg.isGoingToBorn()) {
-				// eggs.remove(egg);
 				toRemove.add(egg);
 				chickens.add(new Chicken());
 			}
 		}
 		eggs.removeAll(toRemove);
-		day++;
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -85,7 +86,7 @@ public class Farm implements ChickenDao, EggDao,FarmDao {
 		int resp = buy(new Chicken(), cant, readChickens(id));
 		if (resp == 0) {
 			for (int i = 0; i < cant; i++)
-				insertChicken(new Chicken());
+				insertChicken(new Chicken(id));
 			// chickens.add(new Chicken());
 		}
 		return resp;

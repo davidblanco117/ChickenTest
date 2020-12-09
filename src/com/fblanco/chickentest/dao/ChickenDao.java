@@ -43,6 +43,7 @@ public interface ChickenDao extends IDBConnection {
 			String query = "INSERT INTO " + TCHICKEN + "( " + TCHICKEN_DIAS_DE_VIDA + ", " + TCHICKEN_PRECIO + ", " +
 					TEGGS_ID_GRANJA + "," + TEGGS_DIAS_HASTA_PROXIMOS_HUEVOS + ")" + " VALUES(1," + chicken.getPrice() + ", " +
 					chicken.getIdGranja() + ", " +  chicken.getDaysToPutAnEgg() + ")";
+			System.out.println(query);
 			statement.executeUpdate(query);
 
 		} catch (Exception e) {
@@ -52,6 +53,31 @@ public interface ChickenDao extends IDBConnection {
 
 		return false;
 	}
+	
+	
+	default boolean updateChickensNewDay(Farm farm) {
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		return true;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	default boolean deleteChicken(int cant, int idGranja) {
 

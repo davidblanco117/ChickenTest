@@ -4,8 +4,6 @@ package primaryPackage;
 public class Chicken implements Comerciable{
 
 	
-	private final int MAXIMUNDAYSOFLIFE=100;
-	private final int CANTEGGS=3;
 	private int idGranja;
 	private final int maxSupported=100;
 	
@@ -21,7 +19,6 @@ public class Chicken implements Comerciable{
 		daysOfLife=0;
 		daysToPutAnEgg=Parametros.cantDiasPonerHuevos;
 		price=Parametros.precioPollos;
-		idGranja = 1;
 	}
 	
 	public Chicken(int idGranja) {

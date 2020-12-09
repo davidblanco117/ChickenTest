@@ -15,7 +15,7 @@ public class Menu implements FarmDao{
 		do {
 			System.out.println();
 			System.out.println("**************************************************************");
-			System.out.println("*                      DIA : " + String.format("%5d", farm.getDay())
+			System.out.println("*                      DIA : " + String.format("%5d", Parametros.dia)
 					+ "                           *");
 			System.out.println("**************************************************************");
 			System.out.println("\nElija una opcion: ");
@@ -135,7 +135,8 @@ public class Menu implements FarmDao{
 					loop=false;
 					Farm newFarm = new Farm(1000.0);
 					insertNewUser(newFarm, user, pass);
-					mostrarMenuPrincipal(newFarm);
+					farm=readFarm(user, pass);
+					mostrarMenuPrincipal(farm);
 					
 				}
 

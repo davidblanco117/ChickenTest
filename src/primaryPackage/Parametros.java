@@ -2,17 +2,17 @@ package primaryPackage;
 
 import com.fblanco.chickentest.dao.ParametrosDao;
 
-public  class Parametros implements ParametrosDao{
+public class Parametros implements ParametrosDao{
 
 	
 	public static int dia;
-	public static  double precioPollos;
-	public static  double precioHuevos;
-	public static  int cantDiasVidaPollo;
-	public static  int cantDiasPonerHuevos;
-	public static  int cantHuevosDeUnPollo;
-	public static  int cantDiasEclosionarHuevos;
-	public static  int id;
+	public static double precioPollos;
+	public static double precioHuevos;
+	public static int cantDiasVidaPollo;
+	public static int cantDiasPonerHuevos;
+	public static int cantHuevosDeUnPollo;
+	public static int cantDiasEclosionarHuevos;
+	public static int id;
 	
 	public Parametros() {
 		Parametros param = readParams();
@@ -41,7 +41,7 @@ public  class Parametros implements ParametrosDao{
 		Parametros.id = id;
 	}
 
-
+	
 
 	public int getDia() {
 		return dia;

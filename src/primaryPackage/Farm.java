@@ -40,31 +40,10 @@ public class Farm implements ChickenDao, EggDao,FarmDao {
 
 	}
 
-	public void addEgg() {
-		eggs.add(new Egg());
-	}
 
 	public void goNextDay() {
-		Parametros.dia++;
 		updateNewDay(this);
 		
-		toRemove = new ArrayList<Object>();
-		for (Chicken chicken : chickens) {
-			chicken.goNextDay(this);
-			if (!chicken.isAlive())
-				toRemove.add(chicken);
-		}
-		chickens.removeAll(toRemove);
-
-		toRemove = new ArrayList<Object>();
-		for (Egg egg : eggs) {
-			egg.goNextDay(this);
-			if (egg.isGoingToBorn()) {
-				toRemove.add(egg);
-				chickens.add(new Chicken());
-			}
-		}
-		eggs.removeAll(toRemove);
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -83,7 +62,7 @@ public class Farm implements ChickenDao, EggDao,FarmDao {
 	}
 
 	public int buyChickens(int cant) {
-		int resp = buy(new Chicken(), cant, readChickens(id));
+		int resp = buy(new Chicken(this.id), cant, readChickens(id));
 		if (resp == 0) {
 			for (int i = 0; i < cant; i++)
 				insertChicken(new Chicken(id));
@@ -93,10 +72,10 @@ public class Farm implements ChickenDao, EggDao,FarmDao {
 	}
 
 	public int buyEggs(int cant) {
-		int resp = buy(new Egg(), cant, readEggs(this.id));
+		int resp = buy(new Egg(this.id), cant, readEggs(this.id));
 		if (resp == 0) {
 			for (int i = 0; i < cant; i++)
-				insertEgg(new Egg());
+				insertEgg(new Egg(this.id));
 			// eggs.add(new Egg());
 		}
 		return resp;
@@ -117,7 +96,7 @@ public class Farm implements ChickenDao, EggDao,FarmDao {
 
 	public int sellChickens(int cant) {
 		chickens = readChickens(this.id);
-		int resp = sell(new Chicken(), cant, chickens);
+		int resp = sell(new Chicken(this.id), cant, chickens);
 		if (resp == 0) {
 			// for (int i = 0; i < cant; i++) {
 			deleteChicken(cant, this.id);
@@ -130,7 +109,7 @@ public class Farm implements ChickenDao, EggDao,FarmDao {
 
 	public int sellEggs(int cant) {
 		eggs = readEggs(this.id);
-		int resp = sell(new Egg(), cant, eggs);
+		int resp = sell(new Egg(this.id), cant, eggs);
 		if (resp == 0) {
 			// for (int i = 0; i < cant; i++) {
 			deleteEggs(cant, this.id);

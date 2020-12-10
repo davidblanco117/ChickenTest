@@ -9,9 +9,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import com.fblanco.chickentest.db.IDBConnection;
 
+import primaryPackage.Chicken;
+import primaryPackage.Egg;
 import primaryPackage.Farm;
+import primaryPackage.Parametros;
 
-public interface FarmDao extends IDBConnection {
+public interface FarmDao extends IDBConnection, ChickenDao, EggDao {
 
 	default Farm validateUserPass(String user, String pass) {
 
@@ -93,15 +96,39 @@ public interface FarmDao extends IDBConnection {
 	default void updateNewDay(Farm farm) {
 		try (Connection connection = connectionToDB()) {
 			Statement statement = connection.createStatement();
+
 			String query = "UPDATE " + TPARAMETROS + " SET " + TPARAMETROS_DIA + " = " + farm.getDay() + 1;
+			if(statement.executeUpdate(query)>0)
+				Parametros.dia++;
 
-			System.out.println(query);
+			query = "UPDATE " + TCHICKEN + " SET " + TCHICKEN_DIAS_DE_VIDA + " = " + TCHICKEN_DIAS_DE_VIDA + " + 1, " +
+					 TCHICKEN_DIAS_HASTA_PROXIMOS_HUEVOS + " = "+ TCHICKEN_DIAS_HASTA_PROXIMOS_HUEVOS + " - 1 ";
 			statement.executeUpdate(query);
-			query = "UPDATE " + TCHICKEN + " SET " + TCHICKEN_DIAS_DE_VIDA + " = " + TCHICKEN_DIAS_DE_VIDA
-					+ " + 1 ";
+	
+			query = "UPDATE " + TCHICKEN + " SET " + TCHICKEN_DIAS_HASTA_PROXIMOS_HUEVOS + " = "
+					+ Parametros.cantDiasEclosionarHuevos + " WHERE " + TCHICKEN_DIAS_HASTA_PROXIMOS_HUEVOS + " = 0";
+			int cantNewEggs = statement.executeUpdate(query);
 
-			System.out.println(query);
+			query = "DELETE FROM " + TCHICKEN + " WHERE " + TCHICKEN_DIAS_DE_VIDA + " >= "
+					+ Parametros.cantDiasVidaPollo;
 			statement.executeUpdate(query);
+
+
+			query = "UPDATE " + TEGGS + " SET " + TEGGS_DIAS_DE_VIDA + " = " + TEGGS_DIAS_DE_VIDA + " + 1 ";
+			statement.executeUpdate(query);
+
+		
+			query = "DELETE FROM " + TEGGS + " WHERE " + TEGGS_DIAS_DE_VIDA + " = "
+					+ Parametros.cantDiasEclosionarHuevos;
+			int cantNewChicken = statement.executeUpdate(query);
+
+			for (int i = 0; i < cantNewEggs * Parametros.cantHuevosDeUnPollo; i++) 
+				insertEgg(new Egg(farm.getId()));
+
+			
+			for (int i = 0; i < cantNewChicken; i++) 
+				insertChicken(new Chicken(farm.getId()));
+
 
 		} catch (Exception e) {
 			e.printStackTrace();

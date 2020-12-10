@@ -24,7 +24,7 @@ public interface ChickenDao extends IDBConnection {
 			while (rs.next()) {
 				Chicken ck = new Chicken(Double.valueOf(rs.getString("precio")),
 						Integer.valueOf(rs.getString("dias_de_vida")), Integer.valueOf(rs.getString("id_granja")));
-				ck.setDaysToPutAnEgg(Integer.valueOf(rs.getString(TEGGS_DIAS_HASTA_PROXIMOS_HUEVOS)));
+				ck.setDaysToPutAnEgg(Integer.valueOf(rs.getString(TCHICKEN_DIAS_HASTA_PROXIMOS_HUEVOS)));
 				chickens.add(ck);
 			}
 
@@ -41,9 +41,9 @@ public interface ChickenDao extends IDBConnection {
 			Statement statement = connection.createStatement();
 
 			String query = "INSERT INTO " + TCHICKEN + "( " + TCHICKEN_DIAS_DE_VIDA + ", " + TCHICKEN_PRECIO + ", " +
-					TEGGS_ID_GRANJA + "," + TEGGS_DIAS_HASTA_PROXIMOS_HUEVOS + ")" + " VALUES(1," + chicken.getPrice() + ", " +
+					TEGGS_ID_GRANJA + "," + TCHICKEN_DIAS_HASTA_PROXIMOS_HUEVOS + ")" + " VALUES(0," + chicken.getPrice() + ", " +
 					chicken.getIdGranja() + ", " +  chicken.getDaysToPutAnEgg() + ")";
-			System.out.println(query);
+
 			statement.executeUpdate(query);
 
 		} catch (Exception e) {
@@ -56,14 +56,6 @@ public interface ChickenDao extends IDBConnection {
 	
 	
 	default boolean updateChickensNewDay(Farm farm) {
-		
-		
-		
-		
-		
-		
-		
-		
 		
 		
 		return true;

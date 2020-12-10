@@ -12,14 +12,13 @@ public class DataBase {
 	public static final String TCHICKEN_PRECIO = "precio";
 	public static final String TCHICKEN_ID = "id";
 	public static final String TCHICKEN_ID_GRANJA = "id_granja";
-
+	public static final String TCHICKEN_DIAS_HASTA_PROXIMOS_HUEVOS = "dias_hasta_proximos_huevos";
 	
 	public static final String TEGGS = "eggs";	
 	public static final String TEGGS_DIAS_DE_VIDA = "dias_de_vida";
 	public static final String TEGGS_PRECIO = "precio";
 	public static final String TEGGS_ID = "id";
 	public static final String TEGGS_ID_GRANJA = "id_granja";
-	public static final String TEGGS_DIAS_HASTA_PROXIMOS_HUEVOS = "dias_hasta_proximos_huevos";
 
 	
 	

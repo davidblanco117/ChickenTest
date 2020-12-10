@@ -23,7 +23,7 @@ public interface EggDao extends IDBConnection {
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
 			ResultSet rs = preparedStatement.executeQuery();
 			while (rs.next()) {
-				Egg egg = new Egg();
+				Egg egg = new Egg(idGranja);
 				eggs.add(egg);
 			}
 

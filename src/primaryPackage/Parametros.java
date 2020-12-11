@@ -13,9 +13,11 @@ public class Parametros implements ParametrosDao{
 	public static int cantHuevosDeUnPollo;
 	public static int cantDiasEclosionarHuevos;
 	public static int id;
+	public static boolean modoTesting=false;
 	
 	public Parametros() {
 		Parametros param = readParams();
+		Parametros.modoTesting=false;
 		Parametros.dia=param.getDia();
 		Parametros.precioPollos=param.getPrecioPollos();
 		Parametros.precioHuevos=param.getPrecioHuevos();

@@ -4,6 +4,7 @@ public class DataBase {
 	
 	public static final String URL = "jdbc:mysql://localhost:3306/";
 	public static final String DB = "ChickenTest";
+	public static final String DBTESTING = "ChickenTestPruebas";
 	public static final String USER = "ChickenTest";
 	public static final String PASS = "ChickenTest";
 	

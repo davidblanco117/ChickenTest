@@ -48,10 +48,7 @@ public class Chicken implements Comerciable{
 	public int getIdGranja() {
 		return this.idGranja;
 	}
-
-	public int getId() {
-		return this.getId();
-	}
+ 
 	
 	public int getDaysToPutAnEgg() {
 		return this.daysToPutAnEgg;
